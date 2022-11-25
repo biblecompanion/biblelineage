@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+		<title>圣经家谱</title>
+		<meta name="description" content="圣经中以亚当开始的人的互动家谱。" />
+
+		<script src="scripts/jquery/jquery.min.js" type="text/javascript"></script>
+		<script src="scripts/jquery/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="scripts/jquery/jquery.scrollTo.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="styles/jquery/jquery-ui-min.css" type="text/css" media="all" />
+
+		<script type="text/javascript" src="scripts/d3/d3.v3.min.js"></script>
+		<script type="text/javascript" src="scripts/d3/d3.layout.js"></script>
+
+		<script type="text/javascript" src="scripts/visualization.js"></script>
+		<script type="text/javascript" src="scripts/pagescript.js"></script>
+		
+		<link type="text/css" rel="stylesheet" href="styles/styles-min.css"/>
+		<link type="text/css" rel="stylesheet" href="styles/reftagger/reftagger-min.css"/>
+	</head>
+	<body>
+		<div id="main">
+			<div id="titleNav"><img src="images/biblefamilytree.jpg" alt="圣经家谱图标" style="float:left;height:50px;width:50px;" /><h2>圣经家谱</h2></div>
+		</div>
+		<div id="about" title="关于圣经家谱" style="display:none;">
+			<img src="images/biblefamilytree.jpg" style="float:right;" alt="圣经家谱图标" />
+			<p style="margin-top:40px;width:61%;"><strong>关系。</strong>  
+			圣经比其他任何话题都更多地谈论人际关系。 
+			每章都描述了夫妻之间，父亲与子女之间，一个民族与另一个民族之间的关系，以及上帝与人类之间的批判关系。</p>
+			<p style="width:61%;">
+			圣经中有<strong>600</strong>多节经文（以及整整50多个章节！）专门描述家庭关系。
+			
+			我们应该考虑我们所做的一切—我们的决策，我们的语言和表现出的品格—所有这些因素如何影响人类家庭以及我们与创造者的个人和公司关系。</p>
+			<p style="width:61%;">&nbsp;</p>
+			<p style="width:61%;">
+			创建此互动式家谱是为了邀请和鼓励人们发现圣经中所发现的个体之间的关系。
+			通过了解这些关系，我们可以更好地理解圣经的信息，并将其教训应用到我们今天的生活和关系中。</p>
+			<p style="width:61%;">&nbsp;</p>
+			<p>诗篇中预言了这一天的到来：</p>
+			<p class="quote"><em>大地的尽头都要记住并转向耶和华，所有的<strong>家庭</strong>列国必在你面前敬拜。</em> (诗篇22:27)</p>
+			<p>愿至高者加速这一天，使所有家庭在祂面前健康与和平。</p>
+			<p>&nbsp;</p>
+			<p>通过以下技术，使该站点成为可能：</p>
+			<ul>
+				<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript" target="_blank">JavaScript</a></li>
+				<li><a href="http://www.w3.org/Style/CSS/" target="_blank">CSS</a></li>
+				<li><a href="http://d3js.org/" target="_blank">D3.js</a></li>
+				<li><a href="http://jquery.com/" target="_blank">jQuery</a></li>
+				<li><a href="http://www.mozilla.org/en-US/firefox/fx/" target="_blank">Mozilla Firefox</a></li>
+				<li><a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a></li>
+			</ul>
+			<p>&nbsp;</p>
+			<p>本网站是<strong><a href="http://www.ThePsalm119Foundation.org" target="_blank">《诗篇119》</a></strong>基金会的服务。</p>
+			<p>特别感谢来自中国杭州的Yiming Zeng, Ganyu Peng, Shuying Zhang, Hangyan Luo, Fenfen Sun, and Xin Xin ，感谢他们在将网站翻译成中文方面的辛勤工作！</p>
+			<p>所有内容，代码，脚本（上述内容除外）和概念均为 ©2013-2021 The Psalm 119 Foundation。 版权所有。</p>
+		</div>
+		<div id="help" title="圣经家谱帮助" style="display:none;">
+			<p style="color:red"><strong>该站点需要支持HTML 5和JavaScript的现代浏览器。</strong></p>
+			<p>
+			我们 <strong>非常</strong>建议使用基于电脑（而不是手机或平板电脑）的全屏浏览器进行查看。</p>
+			<p>&nbsp;</p>
+			<h3>触摸屏</h3>
+			<p>触摸圆圈一下=显示详细信息</p>
+			<p>触摸一个圆圈两次=展开或折叠子级信息</p>
+			<p>&nbsp;</p>
+			<h3>非触摸屏</h3>
+			<p>将光标悬停在圆圈上=显示详细信息</p>
+			<p>点击一个圆圈=展开或折叠子级信息</p>
+			<p>&nbsp;</p>
+			<p>图例解释:</p>
+			<svg height="25%" width="100%" style="margin-top:5px">
+				<g class="node" transform="translate(15,10)">
+					<circle class="base-expanded" r="5"></circle>
+					<text x="10" dy="0.35em">已显示所有子孙信息（单击或触摸以折叠）</text>
+				</g>
+				<g class="node" transform="translate(15,25)">
+					<circle class="base-collapsed" r="5"></circle>
+					<text x="10" dy="0.35em">已隐藏所有子孙信息（单击或触摸以展开）</text>
+				</g>
+				<g class="node" transform="translate(15,40)">
+					<circle class="messianicLine-expanded" r="5"></circle>
+					<text x="10" dy="0.35em">弥赛亚线</text>
+				</g>
+				<g class="node" transform="translate(15,55)">
+					<circle class="major messianicLine-expanded" r="5"></circle>
+					<text x="10" dy="0.35em">弥赛亚线中的杰出人物</text>
+				</g>
+				<g class="node" transform="translate(15,70)">
+					<circle class="priest-collapsed" r="5"></circle>
+					<text x="10" dy="0.35em">神职教士</text>
+				</g>
+				<g class="node" transform="translate(15,85)">
+					<circle class="Israel-collapsed" r="5"></circle>
+					<text x="10" dy="0.35em">以色列人</text>
+				</g>
+				<g class="node" transform="translate(15,100)">
+					<circle class="judge-collapsed" r="5"></circle>
+					<text x="10" dy="0.35em">士师</text>
+				</g>
+			</svg>
+			<p>
+			配偶信息在详细信息中有标识，连接线里面就不显示了。</p>
+			<p>&nbsp;</p>
+			<p>如果您还有其他疑问，请 
+			<a href="http://www.ThePsalm119Foundation.org/contact-us.html" target="_blank">联系我们</a> 通过 
+			<a href="http://www.ThePsalm119Foundation.org" target="_blank">诗篇119基金会网站</a>。</p>
+		</div>
+		<div id="expand" title="圣经家谱" style="display:none;">
+			<p>您确定要一次显示所有这些内容吗？<br/>这里有1,000多人！</p>
+			<p>&nbsp;</p>
+			<p><em>它会变得有些拥挤。</em></p>
+			<p>&nbsp;</p>
+			<p>
+				<span class="expandYes" id="expandYes">是。<br/>越多越开心！</span>
+				<span class="expandNo" id="expandNo">不。<br/>已经太拥挤了！</span>
+			</p>
+		</div>
+		<div id="expandInProgress" title="圣经家谱" style="display:none;">
+			<p>在每个人都被挤压到位的过程中，请稍候...</p>
+		</div>
+		<div id="expandComplete" title="圣经家谱" style="display:none;">
+			<p>好吧...大家都在这里！</p>
+			<p>&nbsp;</p>
+			<p>
+				<span class="expandCompleteOK" id="expandCompleteOK">好的</span>
+			</p>
+		</div>
+		<div id="remindScroll" title="有用的提示" style="display:none;">
+			<p>按住shift 键不放，滚动鼠标可以左右滑动内容。</p>
+		</div>
+		
+		<div id="footerNav">
+			<p>
+				<span id="p119f">&copy; 2013-2021 
+				<a class="p119fLink" href="http://www.thepsalm119foundation.org" target="_blank">The 
+				Psalm 119 Foundation</a>.</span> | 
+				<span class="helpLink" id="helpLink">帮助</span> | 
+				<span class="aboutLink" id="aboutLink">关于本网站</span> |
+				<span id="expandLinkSection"><span class="expandLink" id="expandLink">显示全部</span> |</span>
+				<span class="langLink"><a class="langLink" href="/telugu.html">泰卢固语</a></span> |
+				<span class="langLink"><a class="langLink" href="/default.html">英语</a></span>
+			</p>
+		</div>
+
+		<script type="text/javascript">
+			const margin = {
+				top:20, 
+				right:20, 
+				bottom:20,
+				left:120
+			};
+			
+			const spouse_label = "配偶";
+			
+			var width = 6000 - margin.right - margin.left,
+				height = 6000 - margin.top - margin.bottom,
+				i = 0,
+				root, moveTarget, nodes;
+
+			var tree = d3.layout.tree()
+				.size([height, width]);
+
+			var diagonal = d3.svg.diagonal()
+				.projection(function(d) { return [d.x, d.y]; });
+
+			const vis = d3.select("#main").append("svg:svg")
+				.attr('width', width + margin.right + margin.left)
+				.attr('height', height + margin.top + margin.bottom)
+				.append("svg:g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+			var tooltipDiv = d3.select("#main").append("div")
+				.attr("class", "tooltip")
+				.style("opacity", 0)
+				.on("mouseup", hideToolTip)
+				.on("touchEnd", hideToolTip)
+				.on("mouseover", function(d) {
+					tooltipDiv.transition()
+						.duration(200)
+						.style("opacity", .9);
+				})
+				.on("mouseout", hideToolTip);
+				
+			d3.json("genealogy_zh-min.json", function(json) {
+				root = json;
+				root.x0 = width / 2;
+				root.y0 = 0;
+
+				update(root);
+				center();
+			});
+			
+			$(document).ready(function() {
+				remindScroll();
+			});
+		</script>
+		
+		<!-- RefTagger from Logos. Visit http://www.logos.com/reftagger. This code should appear directly before the </body> tag. -->
+		<script type="text/javascript" src="scripts/reftagger/referencetagging.js"></script>
+		<script type="text/javascript">
+			Logos.ReferenceTagging.lbsBibleVersion = "NASB";
+			Logos.ReferenceTagging.lbsLinksOpenNewWindow = true;
+			Logos.ReferenceTagging.lbsLogosLinkIcon = "dark";
+			Logos.ReferenceTagging.lbsNoSearchTagNames = [ "h2", "h3", "h3" ];
+			Logos.ReferenceTagging.lbsTargetSite = "biblia";
+			Logos.ReferenceTagging.lbsCssOverride = true;
+			Logos.ReferenceTagging.tag();
+		</script>
+	</body>
+</html>
